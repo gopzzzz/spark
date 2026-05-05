@@ -1,0 +1,67 @@
+  <div id="sidebar" class="active">
+            <div class="sidebar-wrapper active">
+                <div class="sidebar-header">
+                    <div class="d-flex justify-content-between">
+                        <div class="logo">
+                            <a href="index.html"><img style="height:52px;"src="{{asset('admin/assets/images/logo/moolan.png')}}" alt="Logo" srcset=""></a>
+                        </div>
+                        <div class="toggler">
+                            <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="sidebar-menu">
+                    <ul class="menu">
+                        <li class="sidebar-title">Menu</li>
+
+                        <li class="sidebar-item active ">
+                            <a href="{{url('dashboard')}}" class='sidebar-link'>
+                                <i class="bi bi-grid-fill"></i>
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+
+                        
+                        <li class="sidebar-item  ">
+                            <a href="{{url('createblogs')}}" class='sidebar-link'>
+                                <i class="bi bi-grid-1x2-fill"></i>
+                                <span>Daily Blogs</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item  ">
+                            <a href="{{url('createbooks')}}" class='sidebar-link'>
+                                <i class="bi bi-file-earmark-spreadsheet-fill"></i>
+                                <span>Publish Books</span>
+                            </a>
+                        </li>
+
+                         <li class="sidebar-item  ">
+                            <a href="{{url('uploads')}}" class='sidebar-link' target="_blank">
+                                <i class="bi bi-image-fill"></i>
+                                <span>Uploads</span>
+                            </a>
+                        </li>
+                           <li class="sidebar-item  ">
+                            <a href="{{url('orderlist')}}" class='sidebar-link' >
+                                <i class="bi bi-basket-fill"></i>
+                                <span>Orders</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item  ">
+                            <a href="{{url('logout')}}" class='sidebar-link'>
+                                <i class="bi bi-box-arrow-right"></i>
+                                <span>Logout</span>
+                            </a>
+                        </li>
+
+
+
+                        
+
+                    </ul>
+                </div>
+                <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
+            </div>
+        </div>
