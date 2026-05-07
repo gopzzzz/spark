@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BannerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,10 +45,11 @@ Route::get('/deletebooks/{id}',[App\Http\Controllers\HomeController::class, 'del
 Route::get('/orderlist', [App\Http\Controllers\HomeController::class, 'orderlist'])->name('orderlist');
 Route::post('/orderfetch', [App\Http\Controllers\HomeController::class, 'orderfetch'])->name('orderfetch');
 Route::post('/editorder', [App\Http\Controllers\HomeController::class, 'editorder'])->name('editorder');
-
 Route::post('/create-order', [App\Http\Controllers\WebController::class, 'createOrder'])->name('create-order');
 Route::get('/payment-success', [App\Http\Controllers\WebController::class, 'paymentSuccess'])->name('payment.success');
-
+Route::get('/banners', [BannerController::class, 'bannerlist'])->name('banners');
+Route::post('/storebanner', [BannerController::class, 'storebanner'])->name('storebanner');
+Route::post('/banneredit', [BannerController::class, 'banneredit'])->name('banneredit');
 
 
 

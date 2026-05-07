@@ -3,7 +3,7 @@
                 <div class="sidebar-header">
                     <div class="d-flex justify-content-between">
                         <div class="logo">
-                            <a href="index.html"><img style="height:52px;"src="{{asset('admin/assets/images/logo/moolan.png')}}" alt="Logo" srcset=""></a>
+                            <a href="index.html"><img style="height:52px;"src="{{asset('admin/assets/images/logo/logo (1).png')}}" alt="Logo" srcset=""></a>
                         </div>
                         <div class="toggler">
                             <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
@@ -46,6 +46,14 @@
                             <a href="{{url('orderlist')}}" class='sidebar-link' >
                                 <i class="bi bi-basket-fill"></i>
                                 <span>Orders</span>
+                            </a>
+                        </li>
+
+                        </li>
+                           <li class="sidebar-item  ">
+                            <a href="{{url('bannerlist')}}" class='sidebar-link' >
+                                <i class="bi bi-basket-fill"></i>
+                                <span>Banners</span>
                             </a>
                         </li>
 
