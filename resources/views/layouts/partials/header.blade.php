@@ -97,6 +97,29 @@
                         </li>
 
                         <li class="sidebar-item  ">
+                            <a href="{{url('favoritelist')}}" class='sidebar-link' >
+                                <i class="bi bi-basket-fill"></i>
+                                <span>Favorites</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item  ">
+                            <a href="{{url('subscriptionlist')}}" class='sidebar-link' >
+                                <i class="bi bi-basket-fill"></i>
+                                <span>Subscription</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item  ">
+                            <a href="{{url('subplanlist')}}" class='sidebar-link' >
+                                <i class="bi bi-basket-fill"></i>
+                                <span>Subscription Plan</span>
+                            </a>
+                        </li>
+
+
+
+                        <li class="sidebar-item  ">
                             <a href="{{url('logout')}}" class='sidebar-link'>
                                 <i class="bi bi-box-arrow-right"></i>
                                 <span>Logout</span>

@@ -7,6 +7,9 @@ use App\Http\Controllers\VideoController;
 use App\Http\Controllers\RelatedNoteController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\WatchHistoryController;
+use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\SubscriptionController;
+use App\Http\Controllers\SubPlanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,6 +73,14 @@ Route::post('/customeredit', [CustomerController::class, 'customeredit'])->name(
 Route::get('/watchhistorylist', [WatchHistoryController::class, 'watchhistorylist'])->name('watchhistory');
 Route::post('/storewatchhistory', [WatchHistoryController::class, 'storewatchhistory'])->name('storewatchhistory');
 Route::post('/watchhistoryedit', [WatchHistoryController::class, 'watchhistoryedit'])->name('watchhistoryedit');
-
+Route::get('/favoritelist', [FavoriteController::class, 'favoritelist'])->name('favorites');
+Route::post('/storefavorite', [FavoriteController::class, 'storefavorite'])->name('storefavorite');
+Route::post('/favoriteedit', [FavoriteController::class, 'favoriteedit'])->name('favoriteedit');
+Route::get('/subscriptionlist', [SubscriptionController::class, 'subscriptionlist'])->name('subscriptions');
+Route::post('/storesubscription', [SubscriptionController::class, 'storesubscription'])->name('storesubscription');
+Route::post('/subscriptionedit', [SubscriptionController::class, 'subscriptionedit'])->name('subscriptionedit');
+Route::get('/subplanlist', [SubPlanController::class, 'subplanlist'])->name('subplans');
+Route::post('/storesubplan', [SubPlanController::class, 'storesubplan'])->name('storesubplan');
+Route::post('/subplanedit', [SubPlanController::class, 'subplanedit'])->name('subplanedit');
 
 require __DIR__.'/auth.php';
