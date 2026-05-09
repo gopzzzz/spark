@@ -10,8 +10,7 @@ class BannerController extends Controller
 {
     public function bannerlist()
     {
-        $role = Auth::user()->role;
-
+        $role = Auth::check() ? Auth::user()->role : null;
         $banners = Banner::orderBy('id', 'desc')->get();
 
         return view('bannerlist', compact('banners', 'role'));

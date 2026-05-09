@@ -2,6 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BannerController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\VideoController;
+use App\Http\Controllers\RelatedNoteController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\WatchHistoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,10 +52,24 @@ Route::post('/orderfetch', [App\Http\Controllers\HomeController::class, 'orderfe
 Route::post('/editorder', [App\Http\Controllers\HomeController::class, 'editorder'])->name('editorder');
 Route::post('/create-order', [App\Http\Controllers\WebController::class, 'createOrder'])->name('create-order');
 Route::get('/payment-success', [App\Http\Controllers\WebController::class, 'paymentSuccess'])->name('payment.success');
-Route::get('/banners', [BannerController::class, 'bannerlist'])->name('banners');
+Route::get('/bannerlist', [BannerController::class, 'bannerlist'])->name('banners');
 Route::post('/storebanner', [BannerController::class, 'storebanner'])->name('storebanner');
 Route::post('/banneredit', [BannerController::class, 'banneredit'])->name('banneredit');
-
+Route::get('/categorylist', [CategoryController::class, 'categorylist'])->name('categories');
+Route::post('/storecategory', [CategoryController::class, 'storecategory'])->name('storecategory');
+Route::post('/categoryedit', [CategoryController::class, 'categoryedit'])->name('categoryedit');
+Route::get('/videolist', [VideoController::class, 'videolist'])->name('videos');
+Route::post('/storevideo', [VideoController::class, 'storevideo'])->name('storevideo');
+Route::post('/videoedit', [VideoController::class, 'videoedit'])->name('videoedit');
+Route::get('/relatednoteslist', [RelatedNoteController::class, 'relatednoteslist'])->name('relatednotes');
+Route::post('/storerelatednote', [RelatedNoteController::class, 'storerelatednote'])->name('storerelatednote');
+Route::post('/relatednoteedit', [RelatedNoteController::class, 'relatednoteedit'])->name('relatednoteedit');
+Route::get('/customerlist', [CustomerController::class, 'customerlist'])->name('customers');
+Route::post('/storecustomer', [CustomerController::class, 'storecustomer'])->name('storecustomer');
+Route::post('/customeredit', [CustomerController::class, 'customeredit'])->name('customeredit');
+Route::get('/watchhistorylist', [WatchHistoryController::class, 'watchhistorylist'])->name('watchhistory');
+Route::post('/storewatchhistory', [WatchHistoryController::class, 'storewatchhistory'])->name('storewatchhistory');
+Route::post('/watchhistoryedit', [WatchHistoryController::class, 'watchhistoryedit'])->name('watchhistoryedit');
 
 
 require __DIR__.'/auth.php';

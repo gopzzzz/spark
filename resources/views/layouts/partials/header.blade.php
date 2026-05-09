@@ -49,11 +49,50 @@
                             </a>
                         </li>
 
-                        </li>
+                        
                            <li class="sidebar-item  ">
                             <a href="{{url('bannerlist')}}" class='sidebar-link' >
                                 <i class="bi bi-basket-fill"></i>
                                 <span>Banners</span>
+                            </a>
+                        </li>
+
+                        
+                           <li class="sidebar-item  ">
+                            <a href="{{url('categorylist')}}" class='sidebar-link' >
+                                <i class="bi bi-basket-fill"></i>
+                                <span>Categories</span>
+                            </a>
+                        </li>
+
+                        
+                           <li class="sidebar-item  ">
+                            <a href="{{url('videolist')}}" class='sidebar-link' >
+                                <i class="bi bi-basket-fill"></i>
+                                <span>Videos</span>
+                            </a>
+                        </li>
+
+                        
+                           <li class="sidebar-item  ">
+                            <a href="{{url('relatednoteslist')}}" class='sidebar-link' >
+                                <i class="bi bi-basket-fill"></i>
+                                <span>Related Notes</span>
+                            </a>
+                        </li>
+
+                         
+                           <li class="sidebar-item  ">
+                            <a href="{{url('customerlist')}}" class='sidebar-link' >
+                                <i class="bi bi-basket-fill"></i>
+                                <span>Customer</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item  ">
+                            <a href="{{url('watchhistorylist')}}" class='sidebar-link' >
+                                <i class="bi bi-basket-fill"></i>
+                                <span>Watch History</span>
                             </a>
                         </li>
 

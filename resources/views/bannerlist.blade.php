@@ -17,15 +17,16 @@
     </div>
   </div>
   <section class="section">
+    
+    <div class="card-header d-flex justify-content-end py-2">
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addBannerModal"> Create Banner </button>
+    </div>
     <div class="card"> @if(session('success')) <div class="alert alert-success alert-dismissible" role="alert">
         {{ session('success') }}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div> @endif @if ($errors->any()) <div class="alert alert-warning">
         <ul class="mb-0"> @foreach ($errors->all() as $error) <li>{{ $error }}</li> @endforeach </ul>
       </div> @endif </div>
-    <div class="card-header text-end">
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addBannerModal"> Create Banner </button>
-    </div>
     <div class="card-body">
       <table class="table table-striped" id="table1">
         <thead>
