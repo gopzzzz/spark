@@ -28,35 +28,65 @@ class RelatedNoteController extends Controller
         return view('relatednoteslist', compact('relatednotes', 'videos', 'role'));
     }
 
-    public function storerelatednote(Request $request)
-    {
-        $request->validate([
-            'video_id' => 'required|exists:videos,id',
-            'related_notes' => 'nullable|string',
-        ]);
+   public function storerelatednote(Request $request)
+{
+    $request->validate([
+        'video_id' => 'required|exists:videos,id',
+        'related_notes.*' => 'nullable|file|mimes:pdf,jpg,jpeg,png,webp|max:2048',
+    ]);
 
-        RelatedNote::create([
-            'video_id' => $request->video_id,
-            'related_notes' => $request->related_notes,
-        ]);
+    $filesArray = [];
 
-        return redirect()->back()->with('success', 'Related note created successfully!');
+    if ($request->hasFile('related_notes')) {
+
+        foreach ($request->file('related_notes') as $file) {
+
+            $filename = time().'_'.$file->getClientOriginalName();
+
+            $file->move(public_path('related_notes'), $filename);
+
+            $filesArray[] = $filename;
+        }
     }
 
-    public function relatednoteedit(Request $request)
-    {
-        $request->validate([
-            'id' => 'required|exists:related_notes,id',
-            'video_id' => 'required|exists:videos,id',
-            'related_notes' => 'nullable|string',
-        ]);
+    RelatedNote::create([
+        'video_id' => $request->video_id,
+        'related_notes' => implode(',', $filesArray),
+    ]);
 
-        $relatednote = RelatedNote::findOrFail($request->id);
+    return redirect()->back()->with('success', 'Related note created successfully!');
+}
 
-        $relatednote->video_id = $request->video_id;
-        $relatednote->related_notes = $request->related_notes;
-        $relatednote->save();
+   public function relatednoteedit(Request $request)
+{
+    $request->validate([
+        'id' => 'required|exists:related_notes,id',
+        'video_id' => 'required|exists:videos,id',
+        'related_notes.*' => 'nullable|file|mimes:pdf,jpg,jpeg,png,webp|max:2048',
+    ]);
 
-        return redirect()->back()->with('success', 'Related note updated successfully!');
+    $relatednote = RelatedNote::findOrFail($request->id);
+
+    $filesArray = [];
+
+    if ($request->hasFile('related_notes')) {
+
+        foreach ($request->file('related_notes') as $file) {
+
+            $filename = time().'_'.$file->getClientOriginalName();
+
+            $file->move(public_path('related_notes'), $filename);
+
+            $filesArray[] = $filename;
+        }
+
+        $relatednote->related_notes = implode(',', $filesArray);
     }
+
+    $relatednote->video_id = $request->video_id;
+
+    $relatednote->save();
+
+    return redirect()->back()->with('success', 'Related note updated successfully!');
+}
 }

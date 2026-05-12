@@ -25,17 +25,17 @@ class SubscriptionController extends Controller
         )
 
         ->leftJoin(
-            'sub_plans',
-            'subscriptions.subscription_id',
-            '=',
-            'sub_plans.id'
-        )
+    'sub_plans',
+    'subscriptions.subscription_id',
+    '=',
+    'sub_plans.id'
+)
 
-        ->select(
-            'subscriptions.*',
-            'customers.phone_number',
-            'sub_plans.plan_name'
-        )
+->select(
+    'subscriptions.*',
+    'customers.phone_number',
+    'sub_plans.plan_name'
+)
 
         ->orderBy('subscriptions.id', 'desc')
         ->get();

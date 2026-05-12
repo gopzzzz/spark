@@ -22,32 +22,32 @@
                         </li>
 
                         
-                        <li class="sidebar-item  ">
+                        <!-- <li class="sidebar-item  ">
                             <a href="{{url('createblogs')}}" class='sidebar-link'>
                                 <i class="bi bi-grid-1x2-fill"></i>
                                 <span>Daily Blogs</span>
                             </a>
-                        </li>
+                        </li> -->
 
-                        <li class="sidebar-item  ">
+                        <!-- <li class="sidebar-item  ">
                             <a href="{{url('createbooks')}}" class='sidebar-link'>
                                 <i class="bi bi-file-earmark-spreadsheet-fill"></i>
                                 <span>Publish Books</span>
                             </a>
-                        </li>
+                        </li> -->
 
-                         <li class="sidebar-item  ">
+                         <!-- <li class="sidebar-item  ">
                             <a href="{{url('uploads')}}" class='sidebar-link' target="_blank">
                                 <i class="bi bi-image-fill"></i>
                                 <span>Uploads</span>
                             </a>
-                        </li>
-                           <li class="sidebar-item  ">
+                        </li> -->
+                           <!-- <li class="sidebar-item  ">
                             <a href="{{url('orderlist')}}" class='sidebar-link' >
                                 <i class="bi bi-basket-fill"></i>
                                 <span>Orders</span>
                             </a>
-                        </li>
+                        </li> -->
 
                         
                            <li class="sidebar-item  ">

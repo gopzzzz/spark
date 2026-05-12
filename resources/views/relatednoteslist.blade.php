@@ -39,7 +39,11 @@
         <tbody> @foreach($relatednotes as $bk) <tr>
             <td>{{ $loop->iteration }}</td>
             <td>{{ $bk->video_title }}</td>
-            <td>{{ $bk->related_notes }}</td>
+            <td>
+              @php $files = explode(',', $bk->related_notes);@endphp @foreach($files as $file) <a href="{{ asset('related_notes/'.$file) }}" target="_blank"> View File
+        </a><br>
+    @endforeach
+</td>
             <td>
               <button type="button" class="btn btn-sm btn-primary editrelatednote" data-id="{{ $bk->id }}" data-video-id="{{ $bk->video_id }}" data-related-notes="{{ $bk->related_notes }}"> Edit </button>
             </td>
@@ -49,7 +53,7 @@
       <div class="modal fade" id="addRelatedNoteModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
           <div class="modal-content">
-            <form action="{{ route('storerelatednote') }}" method="POST"> @csrf <div class="modal-header">
+            <form action="{{ route('storerelatednote') }}" method="POST"  enctype="multipart/form-data"> @csrf <div class="modal-header">
                 <h5 class="modal-title">Create Related Note</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
@@ -66,7 +70,7 @@
                   </div>
                   <div class="col-md-12 mb-3">
                     <label class="form-label">Related Notes</label>
-                    <textarea name="related_notes" class="form-control" rows="4" placeholder="Enter related notes">{{ old('related_notes') }}</textarea>
+                    <input type="file" name="related_notes[]" class="form-control" multiple accept=".pdf,image/*">
                   </div>
                 </div>
               </div>
@@ -82,7 +86,7 @@
       <div class="modal fade" id="editrelatednotemodal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
           <div class="modal-content">
-            <form method="POST" action="{{ url('relatednoteedit') }}" name="relatednoteeditform"> @csrf <div class="modal-header">
+            <form method="POST" action="{{ url('relatednoteedit') }}" name="relatednoteeditform" enctype="multipart/form-data"> @csrf <div class="modal-header">
                 <h5 class="modal-title">Edit Related Note</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
@@ -99,11 +103,10 @@
                       </option> @endforeach
                     </select>
                   </div>
-                  {{-- Related Notes --}}
-                  <div class="col-md-12 mb-3">
-                    <label class="form-label"> Related Notes </label>
-                    <textarea class="form-control" id="edit_related_notes" name="related_notes" rows="5" placeholder="Enter related notes"></textarea>
-                  </div>
+                 {{-- Related Notes --}}
+                 <div class="col-md-12 mb-3">
+                  <label class="form-label"> Related Notes </label>
+                  <input type="file" class="form-control" id="edit_related_notes" name="related_notes[]" multiple accept=".pdf,image/*"></div>
                 </div>
               </div>
               <div class="modal-footer">
@@ -117,15 +120,24 @@
   </section>
 </div>
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {
+
     document.querySelectorAll('.editrelatednote').forEach(function(button) {
-      button.addEventListener('click', function() {
-        document.getElementById('relatednoteid').value = this.dataset.id;
-        document.getElementById('edit_video_id').value = this.dataset.videoId;
-        document.getElementById('edit_related_notes').value = this.dataset.relatedNotes;
-        var modal = new bootstrap.Modal(document.getElementById('editrelatednotemodal'));
-        modal.show();
-      });
+
+        button.addEventListener('click', function() {
+
+            document.getElementById('relatednoteid').value = this.dataset.id;
+
+            document.getElementById('edit_video_id').value = this.dataset.videoId;
+
+            var modal = new bootstrap.Modal(
+                document.getElementById('editrelatednotemodal')
+            );
+
+            modal.show();
+        });
+
     });
-  });
+
+});
 </script> @endsection

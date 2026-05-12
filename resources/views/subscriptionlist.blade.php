@@ -41,7 +41,7 @@
         <tbody> @foreach($subscriptions as $bk) <tr>
             <td>{{ $loop->iteration }}</td>
             <td>{{ $bk->phone_number }}</td>
-            <td>{{ $bk->subscription_id }}</td>
+            <td>{{ $bk->plan_name }}</td>
             <td>{{ $bk->start_date }}</td>
             <td>{{ $bk->end_date }}</td>
             <td>

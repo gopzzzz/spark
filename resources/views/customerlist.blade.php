@@ -31,6 +31,8 @@
         <thead>
           <tr>
             <th>#</th>
+            <th>Name</th>
+            <th>Qualification</th>
             <th>Phone Number</th>
             <th>OTP</th>
             <th>Image</th>
@@ -39,6 +41,8 @@
         </thead>
         <tbody> @foreach($customers as $bk) <tr>
             <td>{{ $loop->iteration }}</td>
+            <td>{{ $bk->name ?? 'N/A' }}</td>
+            <td>{{ $bk->qualification ?? 'N/A' }}</td>
             {{-- Phone Number --}}
             <td>
               {{ $bk->phone_number }}
@@ -51,7 +55,7 @@
             <td> @if($bk->image) <img src="{{ asset('uploads/customers/' . $bk->image) }}" width="100" class="rounded"> @else No Image @endif </td>
             {{-- Action --}}
             <td>
-              <button type="button" class="btn btn-sm btn-primary editcustomer" data-id="{{ $bk->id }}" data-phone="{{ $bk->phone_number }}" data-otp="{{ $bk->otp }}" data-image="{{ asset('uploads/customers/' . $bk->image) }}"> Edit </button>
+             <button type="button" class="btn btn-sm btn-primary editcustomer" data-id="{{ $bk->id }}" data-name="{{ $bk->name }}" data-qualification="{{ $bk->qualification }}" data-phone="{{ $bk->phone_number }}" data-otp="{{ $bk->otp }}" data-image="{{ asset('uploads/customers/' . $bk->image) }}"> Edit</button>
             </td>
           </tr> @endforeach </tbody>
       </table>
@@ -66,6 +70,14 @@
               <div class="modal-body"> @if ($errors->any()) <div class="alert alert-danger">
                   <ul class="mb-0"> @foreach ($errors->all() as $error) <li>{{ $error }}</li> @endforeach </ul>
                 </div> @endif <div class="row">
+                  {{-- Name --}}
+                  <div class="col-md-12 mb-3">
+                  <label class="form-label">Name</label>
+                  <input type="text" class="form-control" name="name" placeholder="Enter name"></div>
+                  {{-- Qualification--}}
+                   <div class="col-md-12 mb-3">
+                    <label class="form-label">Qualification</label>
+                    <input type="text" class="form-control" name="qualification" placeholder="Enter qualification"></div>
                   {{-- Phone Number --}}
                   <div class="col-md-12 mb-3">
                     <label class="form-label"> Phone Number </label>
@@ -108,6 +120,14 @@
                     <label class="form-label d-block"> Current Customer Image </label>
                     <img id="customer_preview" src="" width="200" class="img-fluid rounded border">
                   </div>
+                    {{-- Name --}}
+                  <div class="col-md-12 mb-3">
+                  <label class="form-label">Name</label>
+                  <input type="text" class="form-control" id="customer_name" name="name" placeholder="Enter name"></div>
+                  {{-- Qualification--}}
+                   <div class="col-md-12 mb-3">
+                    <label class="form-label">Qualification</label>
+                    <input type="text" class="form-control" id="customer_qualification" name="qualification" placeholder="Enter qualification"></div>
                   {{-- Phone Number --}}
                   <div class="col-md-12 mb-3">
                     <label class="form-label"> Phone Number </label>
@@ -136,16 +156,19 @@
   </section>
 </div>
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.editcustomer').forEach(function(button) {
-      button.addEventListener('click', function() {
-        document.getElementById('customerid').value = this.dataset.id;
-        document.getElementById('customer_phone').value = this.dataset.phone;
-        document.getElementById('customer_otp').value = this.dataset.otp;
-        document.getElementById('customer_preview').src = this.dataset.image;
-        var modal = new bootstrap.Modal(document.getElementById('editcustomermodal'));
-        modal.show();
-      });
+        button.addEventListener('click', function() {
+            document.getElementById('customerid').value = this.dataset.id;
+            document.getElementById('customer_name').value = this.dataset.name;
+            document.getElementById('customer_qualification').value = this.dataset.qualification;
+            document.getElementById('customer_phone').value = this.dataset.phone;
+            document.getElementById('customer_otp').value = this.dataset.otp;
+            document.getElementById('customer_preview').src = this.dataset.image;
+
+            var modal = new bootstrap.Modal(document.getElementById('editcustomermodal'));
+            modal.show();
+        });
     });
-  });
+});
 </script>@endsection

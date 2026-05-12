@@ -20,6 +20,8 @@ class CustomerController extends Controller
     public function storecustomer(Request $request)
     {
         $request->validate([
+            'name' => 'nullable|string|max:255',
+            'qualification' => 'nullable|string|max:255',
             'phone_number' => 'required|string|max:20',
             'otp'          => 'nullable|string|max:10',
             'image'        => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
@@ -38,6 +40,9 @@ class CustomerController extends Controller
         }
 
         Customer::create([
+            
+            'name' => $request->name,
+            'qualification' => $request->qualification,
             'phone_number' => $request->phone_number,
             'otp'          => $request->otp,
             'image'        => $imageName,
@@ -52,7 +57,10 @@ class CustomerController extends Controller
     public function customeredit(Request $request)
     {
         $request->validate([
+
             'id'           => 'required|exists:customers,id',
+            'name' => 'nullable|string|max:255',
+            'qualification' => 'nullable|string|max:255',
             'phone_number' => 'required|string|max:20',
             'otp'          => 'nullable|string|max:10',
             'image'        => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
@@ -71,7 +79,8 @@ class CustomerController extends Controller
 
             $customer->image = $imageName;
         }
-
+        $customer->name = $request->name;
+        $customer->qualification = $request->qualification;
         $customer->phone_number = $request->phone_number;
         $customer->otp = $request->otp;
 

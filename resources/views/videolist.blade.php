@@ -33,6 +33,7 @@
             <th>#</th>
             <th>Thumbnail</th>
             <th>Title</th>
+            <th>Category</th>
             <th>Description</th>
             <th>Video</th>
             <th>Status</th>
@@ -49,6 +50,7 @@
             <td>
               {{ $bk->title }}
             </td>
+            <td>{{ $bk->category_name ?? 'N/A' }}</td>
             {{-- Description --}}
             <td>
               {{ Str::limit($bk->description, 50) }}
@@ -63,7 +65,7 @@
             <td> @if($bk->status == 1) <span class="badge bg-success">Active</span> @else <span class="badge bg-danger">Inactive</span> @endif </td>
             {{-- Action --}}
             <td>
-              <button type="button" class="btn btn-sm btn-primary editvideo" data-id="{{ $bk->id }}" data-title="{{ $bk->title }}" data-description="{{ $bk->description }}" data-status="{{ $bk->status }}" data-thumbnail="{{ asset('uploads/thumbnails/' . $bk->thumbnail) }}" data-video="{{ asset('uploads/videos/' . $bk->video) }}"> Edit </button>
+              <button type="button" class="btn btn-sm btn-primary editvideo" data-id="{{ $bk->id }}" data-title="{{ $bk->title }}" data-category-id="{{ $bk->category_id }}" data-description="{{ $bk->description }}" data-status="{{ $bk->status }}" data-thumbnail="{{ asset('uploads/thumbnails/' . $bk->thumbnail) }}" data-video="{{ asset('uploads/videos/' . $bk->video) }}"> Edit </button>
             </td>
           </tr> @endforeach </tbody>
       </table>
@@ -83,6 +85,10 @@
                     <label class="form-label"> Video Title </label>
                     <input type="text" class="form-control" name="title" placeholder="Enter video title" value="{{ old('title') }}" required />
                   </div>
+                  <div class="col-md-12 mb-3">
+                    <label class="form-label">Select Category</label>
+    <select name="category_id" class="form-control" required><option value="">Select Category</option>
+        @foreach($categories as $category)<option value="{{ $category->id }}">{{ $category->category_name }}</option>@endforeach</select></div>
                   {{-- Status --}}
                   <div class="col-md-6 mb-3">
                     <label class="form-label"> Status </label>
@@ -135,6 +141,11 @@
                     <label class="form-label">Video Title</label>
                     <input type="text" class="form-control" id="video_title" name="title" placeholder="Enter video title" required>
                   </div>
+                  <div class="col-md-12 mb-3">
+                    <label class="form-label">Select Category</label>
+                    <select name="category_id" id="edit_category_id" class="form-control" required>
+                       <option value="">Select Category </option>
+                       @foreach($categories as $category)<option value="{{ $category->id }}"> {{ $category->category_name }}</option> @endforeach</select></div>
                   <div class="col-md-6 mb-3">
                     <label class="form-label">Status</label>
                     <select name="status" id="video_status" class="form-control" required>
@@ -172,6 +183,7 @@
       button.addEventListener('click', function() {
         document.getElementById('videoid').value = this.dataset.id;
         document.getElementById('video_title').value = this.dataset.title;
+        document.getElementById('edit_category_id').value = this.dataset.categoryId;
         document.getElementById('video_description').value = this.dataset.description;
         document.getElementById('video_status').value = this.dataset.status;
         document.getElementById('video_thumbnail_preview').src = this.dataset.thumbnail;

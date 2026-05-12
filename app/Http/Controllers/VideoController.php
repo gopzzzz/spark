@@ -5,27 +5,50 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use App\Models\Category;
 use App\Models\Video;
 
 class VideoController extends Controller
 {
-     public function videolist()
-    {
-        $role = Auth::check() ? Auth::user()->role : null;
+    public function videolist()
+{
+    $role = Auth::check() ? Auth::user()->role : null;
 
-        $videos = Video::orderBy('id', 'desc')->get();
+    $videos = DB::table('videos')
 
-        return view('videolist', compact('videos', 'role'));
-    }
+        ->leftJoin('categories', 'videos.category_id', '=', 'categories.id')
+
+        ->select(
+            'videos.*',
+            'categories.category_name'
+        )
+
+        ->orderBy('videos.id', 'desc')
+        ->get();
+
+    $categories = Category::orderBy('category_name')->get();
+
+    return view(
+        'videolist',
+        compact(
+            'videos',
+            'categories',
+            'role'
+        )
+    );
+}
 
    public function storevideo(Request $request)
 {
     $request->validate([
         'video'       => 'required|file|mimes:mp4,mov,avi,wmv|max:51200',
         'title'       => 'required|string|max:255',
+        'category_id' => 'required|exists:categories,id',
         'description' => 'nullable|string',
         'thumbnail'   => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         'status'      => 'required|in:0,1',
+        
     ]);
 
     $videoName = null;
@@ -44,6 +67,7 @@ class VideoController extends Controller
     Video::create([
         'video'       => $videoName,
         'title'       => $request->title,
+        'category_id' => $request->category_id,
         'description' => $request->description,
         'thumbnail'   => $thumbnailName,
         'status'      => $request->status,
@@ -58,6 +82,7 @@ class VideoController extends Controller
         'id'          => 'required|exists:videos,id',
         'video'       => 'nullable|file|mimes:mp4,mov,avi,wmv|max:51200',
         'title'       => 'required|string|max:255',
+        'category_id' => 'required|exists:categories,id',
         'description' => 'nullable|string',
         'thumbnail'   => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         'status'      => 'required|in:0,1',
@@ -93,6 +118,7 @@ class VideoController extends Controller
 
     // Update other fields
     $video->title = $request->title;
+    $video->category_id = $request->category_id;
     $video->description = $request->description;
     $video->status = $request->status;
 

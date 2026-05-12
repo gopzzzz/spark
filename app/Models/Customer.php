@@ -15,5 +15,7 @@ class Customer extends Model
         'phone_number',
         'otp',
         'image',
+        'name',
+        'qualification',
     ];
 }
