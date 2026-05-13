@@ -27,48 +27,49 @@
         <ul class="mb-0"> @foreach ($errors->all() as $error) <li>{{ $error }}</li> @endforeach </ul>
       </div> @endif </div>
     <div class="card-body">
-      <table class="table table-striped" id="table1">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Thumbnail</th>
-            <th>Title</th>
-            <th>Category</th>
-            <th>Description</th>
-            <th>Video</th>
-            <th>Status</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody> @foreach($videos as $bk) <tr>
-            <td>{{ $loop->iteration }}</td>
-            {{-- Thumbnail --}}
-            <td>
-              <img src="{{ asset('uploads/thumbnails/' . $bk->thumbnail) }}" width="100" class="rounded">
-            </td>
-            {{-- Title --}}
-            <td>
-              {{ $bk->title }}
-            </td>
-            <td>{{ $bk->category_name ?? 'N/A' }}</td>
-            {{-- Description --}}
-            <td>
-              {{ Str::limit($bk->description, 50) }}
-            </td>
-            {{-- Video --}}
-            <td>
-              <video width="150" controls>
-                <source src="{{ asset('uploads/videos/' . $bk->video) }}" type="video/mp4">
-              </video>
-            </td>
-            {{-- Status --}}
-            <td> @if($bk->status == 1) <span class="badge bg-success">Active</span> @else <span class="badge bg-danger">Inactive</span> @endif </td>
-            {{-- Action --}}
-            <td>
-              <button type="button" class="btn btn-sm btn-primary editvideo" data-id="{{ $bk->id }}" data-title="{{ $bk->title }}" data-category-id="{{ $bk->category_id }}" data-description="{{ $bk->description }}" data-status="{{ $bk->status }}" data-thumbnail="{{ asset('uploads/thumbnails/' . $bk->thumbnail) }}" data-video="{{ asset('uploads/videos/' . $bk->video) }}"> Edit </button>
-            </td>
-          </tr> @endforeach </tbody>
-      </table>
+      <div class="table-responsive">
+        <table class="table align-middle" id="table1">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Video</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody> @foreach($videos as $bk) <tr>
+              <td>{{ $loop->iteration }}</td>
+              {{-- YouTube Style Video Column --}}
+              <td>
+                <div class="d-flex align-items-start gap-3">
+                  {{-- Thumbnail --}}
+                  <div>
+                    <video width="160" height="90" class="rounded" controls style="object-fit: cover;">
+                      <source src="{{ asset('uploads/videos/' . $bk->video) }}" type="video/mp4">
+                    </video>
+                  </div>
+                  {{-- Video Details --}}
+                  <div>
+                    <h6 class="mb-1 fw-bold">
+                      {{ $bk->title }}
+                    </h6>
+                    <small class="text-muted d-block mb-2"> Category : {{ $bk->category_name ?? 'N/A' }}
+                    </small>
+                    <p class="text-muted small mb-0">
+                      {{ Str::limit($bk->description, 100) }}
+                    </p>
+                  </div>
+                </div>
+              </td>
+              {{-- Status --}}
+              <td> @if($bk->status == 1) <span class="badge bg-success"> Active </span> @else <span class="badge bg-danger"> Inactive </span> @endif </td>
+              {{-- Action --}}
+              <td>
+                <button type="button" class="btn btn-sm btn-primary editvideo" data-id="{{ $bk->id }}" data-title="{{ $bk->title }}" data-category-id="{{ $bk->category_id }}" data-description="{{ $bk->description }}" data-status="{{ $bk->status }}" data-thumbnail="{{ asset('uploads/thumbnails/' . $bk->thumbnail) }}" data-video="{{ asset('uploads/videos/' . $bk->video) }}"> Edit </button>
+              </td>
+            </tr> @endforeach </tbody>
+        </table>
+      </div>
       {{-- Add Video Modal --}}
       <div class="modal fade" id="addVideoModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-centered">
@@ -87,8 +88,10 @@
                   </div>
                   <div class="col-md-12 mb-3">
                     <label class="form-label">Select Category</label>
-    <select name="category_id" class="form-control" required><option value="">Select Category</option>
-        @foreach($categories as $category)<option value="{{ $category->id }}">{{ $category->category_name }}</option>@endforeach</select></div>
+                    <select name="category_id" class="form-control" required>
+                      <option value="">Select Category</option> @foreach($categories as $category) <option value="{{ $category->id }}">{{ $category->category_name }}</option>@endforeach
+                    </select>
+                  </div>
                   {{-- Status --}}
                   <div class="col-md-6 mb-3">
                     <label class="form-label"> Status </label>
@@ -144,8 +147,9 @@
                   <div class="col-md-12 mb-3">
                     <label class="form-label">Select Category</label>
                     <select name="category_id" id="edit_category_id" class="form-control" required>
-                       <option value="">Select Category </option>
-                       @foreach($categories as $category)<option value="{{ $category->id }}"> {{ $category->category_name }}</option> @endforeach</select></div>
+                      <option value="">Select Category </option> @foreach($categories as $category) <option value="{{ $category->id }}"> {{ $category->category_name }}</option> @endforeach
+                    </select>
+                  </div>
                   <div class="col-md-6 mb-3">
                     <label class="form-label">Status</label>
                     <select name="status" id="video_status" class="form-control" required>
