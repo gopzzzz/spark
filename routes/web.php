@@ -64,12 +64,14 @@ Route::post('/categoryedit', [CategoryController::class, 'categoryedit'])->name(
 Route::get('/videolist', [VideoController::class, 'videolist'])->name('videos');
 Route::post('/storevideo', [VideoController::class, 'storevideo'])->name('storevideo');
 Route::post('/videoedit', [VideoController::class, 'videoedit'])->name('videoedit');
+Route::get('/video-related-notes/{id}',[RelatedNoteController::class, 'videorelatednotes'])->name('videorelatednotes');
 Route::get('/relatednoteslist', [RelatedNoteController::class, 'relatednoteslist'])->name('relatednotes');
 Route::post('/storerelatednote', [RelatedNoteController::class, 'storerelatednote'])->name('storerelatednote');
 Route::post('/relatednoteedit', [RelatedNoteController::class, 'relatednoteedit'])->name('relatednoteedit');
 Route::get('/customerlist', [CustomerController::class, 'customerlist'])->name('customers');
 Route::post('/storecustomer', [CustomerController::class, 'storecustomer'])->name('storecustomer');
 Route::post('/customeredit', [CustomerController::class, 'customeredit'])->name('customeredit');
+Route::get('/customer-profile/{id}',[CustomerController::class, 'customerprofile'])->name('customerprofile');
 Route::get('/watchhistorylist', [WatchHistoryController::class, 'watchhistorylist'])->name('watchhistory');
 Route::post('/storewatchhistory', [WatchHistoryController::class, 'storewatchhistory'])->name('storewatchhistory');
 Route::post('/watchhistoryedit', [WatchHistoryController::class, 'watchhistoryedit'])->name('watchhistoryedit');

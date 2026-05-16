@@ -55,6 +55,7 @@
             <td> @if($bk->image) <img src="{{ asset('uploads/customers/' . $bk->image) }}" width="100" class="rounded"> @else No Image @endif </td>
             {{-- Action --}}
             <td>
+              <a href="{{ url('customer-profile/' . $bk->id) }}"class="btn btn-sm btn-info">Show Profile</a>
              <button type="button" class="btn btn-sm btn-primary editcustomer" data-id="{{ $bk->id }}" data-name="{{ $bk->name }}" data-qualification="{{ $bk->qualification }}" data-phone="{{ $bk->phone_number }}" data-otp="{{ $bk->otp }}" data-image="{{ asset('uploads/customers/' . $bk->image) }}"> Edit</button>
             </td>
           </tr> @endforeach </tbody>

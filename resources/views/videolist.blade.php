@@ -65,8 +65,10 @@
               <td> @if($bk->status == 1) <span class="badge bg-success"> Active </span> @else <span class="badge bg-danger"> Inactive </span> @endif </td>
               {{-- Action --}}
               <td>
+                   <a href="{{ url('video-related-notes/' . $bk->id) }}"class="btn btn-sm btn-info">Related Notes</a>
                 <button type="button" class="btn btn-sm btn-primary editvideo" data-id="{{ $bk->id }}" data-title="{{ $bk->title }}" data-category-id="{{ $bk->category_id }}" data-description="{{ $bk->description }}" data-status="{{ $bk->status }}" data-thumbnail="{{ asset('uploads/thumbnails/' . $bk->thumbnail) }}" data-video="{{ asset('uploads/videos/' . $bk->video) }}"> Edit </button>
               </td>
+           
             </tr> @endforeach </tbody>
         </table>
       </div>

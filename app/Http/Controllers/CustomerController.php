@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Customer;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class CustomerController extends Controller
@@ -91,4 +92,80 @@ class CustomerController extends Controller
             'Customer updated successfully!'
         );
     }
+
+    public function customerprofile($id)
+{
+    $role = Auth::check() ? Auth::user()->role : null;
+
+    $customer = Customer::findOrFail($id);
+
+    // Subscription Details
+    $subscriptions = DB::table('subscriptions')
+
+        ->leftJoin(
+            'sub_plans',
+            'subscriptions.subscription_id',
+            '=',
+            'sub_plans.id'
+        )
+
+        ->select(
+            'subscriptions.*',
+            'sub_plans.plan_name',
+            'sub_plans.amount'
+        )
+
+        ->where('subscriptions.cus_id', $id)
+
+        ->get();
+
+    // Watch History
+    $watchhistory = DB::table('watch_history')
+
+        ->leftJoin(
+            'videos',
+            'watch_history.video_id',
+            '=',
+            'videos.id'
+        )
+
+        ->select(
+            'watch_history.*',
+            'videos.title as video_title'
+        )
+
+        ->where('watch_history.cus_id', $id)
+
+        ->get();
+
+    // Favorites
+    $favorites = DB::table('favorites')
+
+        ->leftJoin(
+            'videos',
+            'favorites.video_id',
+            '=',
+            'videos.id'
+        )
+
+        ->select(
+            'favorites.*',
+            'videos.title as video_title'
+        )
+
+        ->where('favorites.cus_id', $id)
+
+        ->get();
+
+    return view(
+        'customer_profile',
+        compact(
+            'customer',
+            'subscriptions',
+            'watchhistory',
+            'favorites',
+            'role'
+        )
+    );
+}
 }

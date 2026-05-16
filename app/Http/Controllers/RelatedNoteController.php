@@ -57,7 +57,7 @@ class RelatedNoteController extends Controller
     return redirect()->back()->with('success', 'Related note created successfully!');
 }
 
-   public function relatednoteedit(Request $request)
+ public function relatednoteedit(Request $request)
 {
     $request->validate([
         'id' => 'required|exists:related_notes,id',
@@ -67,26 +67,75 @@ class RelatedNoteController extends Controller
 
     $relatednote = RelatedNote::findOrFail($request->id);
 
+    // existing files
     $filesArray = [];
 
+    if ($request->existing_files) {
+
+        $filesArray = explode(',', $request->existing_files);
+    }
+
+    // new uploads
     if ($request->hasFile('related_notes')) {
 
         foreach ($request->file('related_notes') as $file) {
 
-            $filename = time().'_'.$file->getClientOriginalName();
+            $filename =
+                time().'_'.uniqid().'_'.$file->getClientOriginalName();
 
-            $file->move(public_path('related_notes'), $filename);
+            $file->move(
+                public_path('related_notes'),
+                $filename
+            );
 
             $filesArray[] = $filename;
         }
-
-        $relatednote->related_notes = implode(',', $filesArray);
     }
 
     $relatednote->video_id = $request->video_id;
 
+    $relatednote->related_notes =
+        implode(',', $filesArray);
+
     $relatednote->save();
 
-    return redirect()->back()->with('success', 'Related note updated successfully!');
+    return redirect()->back()
+        ->with('success', 'Related note updated successfully!');
+}
+
+public function videorelatednotes($id)
+{
+    $role = Auth::check() ? Auth::user()->role : null;
+
+    $video = Video::findOrFail($id);
+
+    $relatednotes = DB::table('related_notes')
+
+        ->leftJoin(
+            'videos',
+            'related_notes.video_id',
+            '=',
+            'videos.id'
+        )
+
+        ->select(
+            'related_notes.*',
+            'videos.title as video_title'
+        )
+
+        ->where('related_notes.video_id', $id)
+
+        ->orderBy('related_notes.id', 'desc')
+
+        ->get();
+
+    return view(
+        'video_related_notes',
+        compact(
+            'relatednotes',
+            'video',
+            'role'
+        )
+    );
 }
 }

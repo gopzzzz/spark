@@ -91,8 +91,9 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                <input type="hidden" name="id" id="relatednoteid" value=""> @if ($errors->any()) <div class="alert alert-danger">
-                  <ul class="mb-0"> @foreach ($errors->all() as $error) <li>{{ $error }}</li> @endforeach </ul>
+                <input type="hidden" name="id" id="relatednoteid" value=""><input type="hidden" name="existing_files" id="existing_files_input"> @if ($errors->any()) <div class="alert alert-danger">
+                
+                <ul class="mb-0"> @foreach ($errors->all() as $error) <li>{{ $error }}</li> @endforeach </ul>
                 </div> @endif <div class="row">
                   {{-- Video Dropdown --}}
                   <div class="col-md-12 mb-3">
@@ -107,6 +108,7 @@
                  <div class="col-md-12 mb-3">
                   <label class="form-label"> Related Notes </label>
                   <input type="file" class="form-control" id="edit_related_notes" name="related_notes[]" multiple accept=".pdf,image/*"></div>
+                  <div class="mt-3"><label class="form-label"> Existing Files</label> <div id="existing_files"></div></div>
                 </div>
               </div>
               <div class="modal-footer">
@@ -120,24 +122,89 @@
   </section>
 </div>
 <script>
-document.addEventListener('DOMContentLoaded', function() {
+
+document.addEventListener('DOMContentLoaded', function () {
 
     document.querySelectorAll('.editrelatednote').forEach(function(button) {
 
         button.addEventListener('click', function() {
 
-            document.getElementById('relatednoteid').value = this.dataset.id;
+            document.getElementById('relatednoteid').value =
+                this.dataset.id;
 
-            document.getElementById('edit_video_id').value = this.dataset.videoId;
+            document.getElementById('edit_video_id').value =
+                this.dataset.videoId;
+
+            let files =
+                this.dataset.relatedNotes.split(',');
+
+            let html = '';
+
+            files.forEach(function(file, index) {
+
+                html += `
+                    <div class="mb-2 file-item">
+
+                        <a href="/related_notes/${file}"
+                           target="_blank">
+
+                            ${file}
+
+                        </a>
+
+                        <button
+                            type="button"
+                            class="btn btn-sm btn-danger ms-2 remove-file"
+                            data-file="${file}"
+                        >
+                            Remove
+                        </button>
+
+                    </div>
+                `;
+            });
+
+            document.getElementById('existing_files').innerHTML = html;
+
+            document.getElementById('existing_files_input').value =
+                this.dataset.relatedNotes;
+
+            // remove file
+            document.querySelectorAll('.remove-file').forEach(function(btn){
+
+                btn.addEventListener('click', function(){
+
+                    let fileToRemove = this.dataset.file;
+
+                    let currentFiles =
+                        document.getElementById('existing_files_input')
+                        .value
+                        .split(',');
+
+                    currentFiles =
+                        currentFiles.filter(file =>
+                            file !== fileToRemove
+                        );
+
+                    document.getElementById('existing_files_input').value =
+                        currentFiles.join(',');
+
+                    this.parentElement.remove();
+
+                });
+
+            });
 
             var modal = new bootstrap.Modal(
                 document.getElementById('editrelatednotemodal')
             );
 
             modal.show();
+
         });
 
     });
 
 });
+
 </script> @endsection
