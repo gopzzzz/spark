@@ -7,7 +7,12 @@ use App\Models\Uploads;
 use App\Models\Blogs;
 use App\Models\Books;
 use App\Models\Order_bookings;
-use DB;
+use App\Models\Video;
+use App\Models\Customer;
+use App\Models\Help;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+
 
 class HomeController extends Controller
 {
@@ -53,6 +58,44 @@ class HomeController extends Controller
         return back()->with('error', 'Failed to upload the Image. ' . $e->getMessage());
     }
     }
+
+public function dashboard()
+{
+    $role = Auth::check() ? Auth::user()->role : null;
+
+    // Total Videos
+    $totalVideos = Video::count();
+
+    // Total Customers
+    $totalCustomers = Customer::count();
+
+    // Turn Over
+    $turnOver = DB::table('subscriptions')
+
+        ->leftJoin(
+            'sub_plans',
+            'subscriptions.subscription_id',
+            '=',
+            'sub_plans.id'
+        )
+
+        ->sum('sub_plans.amount');
+
+    // Help Desk Count
+    $helpDesk = Help::count();
+
+    return view(
+        'dashboard',
+        compact(
+            'role',
+            'totalVideos',
+            'totalCustomers',
+            'turnOver',
+            'helpDesk'
+        )
+    );
+}
+
     public function insertblog(Request $request){
      
    

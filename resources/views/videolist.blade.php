@@ -117,6 +117,27 @@
                     <label class="form-label"> Thumbnail Image </label>
                     <input type="file" class="form-control" name="thumbnail" />
                   </div>
+                
+{{-- Related Notes/Documents --}}
+<div class="col-md-12 mb-3">
+
+    <label class="form-label">
+        Related Documents
+    </label>
+
+    <input
+        type="file"
+        name="related_notes[]"
+        class="form-control"
+        multiple
+        accept=".pdf,image/*">
+
+    <small class="text-muted">
+        Upload PDF or Images
+    </small>
+
+</div>
+
                 </div>
               </div>
               <div class="modal-footer">

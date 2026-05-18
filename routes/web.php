@@ -10,6 +10,7 @@ use App\Http\Controllers\WatchHistoryController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\SubPlanController;
+use App\Http\Controllers\HelpController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,9 +27,11 @@ use App\Http\Controllers\SubPlanController;
 //     return view('welcome');
 // });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+
+Route::get('/dashboard',[App\Http\Controllers\HomeController::class, 'dashboard']
+)->middleware(['auth'])->name('dashboard');
+
+
 
 
 
@@ -84,5 +87,7 @@ Route::post('/subscriptionedit', [SubscriptionController::class, 'subscriptioned
 Route::get('/subplanlist', [SubPlanController::class, 'subplanlist'])->name('subplans');
 Route::post('/storesubplan', [SubPlanController::class, 'storesubplan'])->name('storesubplan');
 Route::post('/subplanedit', [SubPlanController::class, 'subplanedit'])->name('subplanedit');
+Route::get( '/helplist', [HelpController::class, 'helplist'] )->name('helps'); 
+Route::post( '/helpedit', [HelpController::class, 'helpedit'] )->name('helpedit');
 
 require __DIR__.'/auth.php';

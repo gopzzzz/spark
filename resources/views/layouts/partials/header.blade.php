@@ -117,6 +117,13 @@
                             </a>
                         </li>
 
+                        <li class="sidebar-item  ">
+                            <a href="{{url('helplist')}}" class='sidebar-link' >
+                                <i class="bi bi-basket-fill"></i>
+                                <span>Help</span>
+                            </a>
+                        </li>
+
 
 
                         <li class="sidebar-item  ">
